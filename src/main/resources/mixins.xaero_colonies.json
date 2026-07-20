@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.artmaster.xaero_colonies.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "mixins.xaero_colonies.refmap.json",
+  "mixins": [
+    "ColonyManagerMixin",
+    "WorldMapSessionMixin"
+  ]
+}
