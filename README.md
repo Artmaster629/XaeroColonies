@@ -1,6 +1,6 @@
 
-Installation information
-=======
+Информация о моде
+============
 Repository of Minecraft mod that adds compatibility between MineColonies and Xaero's map mods by adding territories of colony to map.
 Mod Author's Discord: https://discord.gg/GxGHskDRW2
 ============
