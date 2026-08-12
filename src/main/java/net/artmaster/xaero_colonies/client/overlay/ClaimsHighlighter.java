@@ -6,7 +6,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import xaero.map.MapProcessor;
 import xaero.map.highlight.ChunkHighlighter;
+import xaero.map.highlight.DimensionHighlighterHandler;
+import xaero.map.highlight.MapRegionHighlightsPreparer;
+import xaero.map.region.MapRegion;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +24,7 @@ public class ClaimsHighlighter extends ChunkHighlighter {
 
     @Override
     public int calculateRegionHash(ResourceKey<Level> key, int regionX, int regionZ) {
+
 
         Map<Long, ColonyInfo> claims = ColonyClaimCache.getClaims().get(key);
         if (claims == null)
@@ -49,6 +54,7 @@ public class ClaimsHighlighter extends ChunkHighlighter {
 
     @Override
     public boolean regionHasHighlights(ResourceKey<Level> key, int regionX, int regionZ) {
+
 
         Map<Long, ColonyInfo> claims = ColonyClaimCache.getClaims().get(key);
         if (claims == null || claims.isEmpty())
@@ -82,6 +88,7 @@ public class ClaimsHighlighter extends ChunkHighlighter {
 
     @Override
     protected int[] getColors(ResourceKey<Level> key, int x, int z) {
+
 
         if (!ColonyClaimCache.isClaimed(key, x, z))
             return null;

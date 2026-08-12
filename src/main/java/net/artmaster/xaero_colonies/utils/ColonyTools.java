@@ -10,8 +10,12 @@ import net.minecraft.world.level.ChunkPos;
 import java.util.HashMap;
 import java.util.Map;
 import net.artmaster.xaero_colonies.ModMain;
+import xaero.map.WorldMapSession;
+import xaero.map.region.MapRegion;
 
 public class ColonyTools {
+
+
 
     public static void updateColonyCash(ServerPlayer player, ServerLevel level) {
             Map<Long, ColonyInfo> chunks = new HashMap<>();
@@ -20,16 +24,15 @@ public class ColonyTools {
                     .getColonyManager()
                     .getAllColonies()
                     .forEach(colony -> {
-
                         if (colony.getWorld().equals(level)) {
 
                             int color = colony.getTeamColonyColor().getColor() & 0xFFFFFF;
                             String name = colony.getName();
                             int id = colony.getID();
 
+
                             ColonyInfo info = new ColonyInfo(color, name, id);
                             Colony colonyImpl = (Colony) colony;
-
 
 
                             colonyImpl.getClaimData().keySet().forEach(packed -> {
@@ -50,7 +53,12 @@ public class ColonyTools {
                         }
                     });
 
+
+
+        ServerScheduler.schedule(10, () -> {
             Network.syncColonies(player, chunks);
+        });
+
 
         }
 }

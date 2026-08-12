@@ -18,6 +18,7 @@ public class ModEvents {
     public static void onUpdateColony(EntityEvent.EnteringSection event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             if (player.level() instanceof ServerLevel level) {
+                System.out.println("ENTERING SECTION");
                 ColonyTools.updateColonyCash(player, level);
             }
         }

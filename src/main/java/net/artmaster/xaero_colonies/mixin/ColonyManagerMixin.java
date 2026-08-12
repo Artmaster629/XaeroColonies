@@ -20,7 +20,7 @@ public class ColonyManagerMixin {
     @Inject(
             method = "createColony",
             at = @At(
-                    value = "HEAD"
+                    value = "RETURN"
             ),
             remap = false
     )
@@ -33,7 +33,7 @@ public class ColonyManagerMixin {
     @Inject(
             method = "deleteColony",
             at = @At(
-                    value = "HEAD"
+                    value = "RETURN"
             ),
             remap = false
     )

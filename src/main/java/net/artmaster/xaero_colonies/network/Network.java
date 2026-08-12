@@ -3,6 +3,8 @@ package net.artmaster.xaero_colonies.network;
 import net.artmaster.xaero_colonies.ModMain;
 import net.artmaster.xaero_colonies.utils.ColonyClaimCache;
 import net.artmaster.xaero_colonies.utils.ColonyInfo;
+import net.artmaster.xaero_colonies.utils.ColonyTools;
+import net.artmaster.xaero_colonies.utils.ServerScheduler;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -32,6 +34,10 @@ public class Network {
                 SyncColoniesPacket.CODEC,
                 (packet, ctx) -> ctx.enqueueWork(() -> {
                     ColonyClaimCache.setClaims(packet.level(), packet.chunks());
+                    System.out.println(
+                            ColonyClaimCache.getClaims()
+                    );
+
                 })
         );
 
@@ -41,6 +47,7 @@ public class Network {
     }
 
     public static void syncColonies(ServerPlayer player, Map<Long, ColonyInfo> chunks) {
+
         PacketDistributor.sendToPlayer(player,
                 new SyncColoniesPacket(player.serverLevel().dimension(), chunks)
         );
