@@ -9,15 +9,12 @@ import net.minecraft.world.level.ChunkPos;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.artmaster.xaero_colonies.ModMain;
-import xaero.map.WorldMapSession;
-import xaero.map.region.MapRegion;
 
 public class ColonyTools {
 
 
 
-    public static void updateColonyCash(ServerPlayer player, ServerLevel level) {
+    public static void updateColonyCash(ServerPlayer player, ServerLevel level) { //update color and name of colony
             Map<Long, ColonyInfo> chunks = new HashMap<>();
 
             MinecoloniesAPIProxy.getInstance()
@@ -42,19 +39,11 @@ public class ColonyTools {
                                         info
                                 );
                             });
-//                            colony.getLoadedChunks().forEach(packed -> {
-//                                ChunkPos pos = new ChunkPos(packed);
-//                                chunks.put(
-//                                        ChunkPos.asLong(pos.x, pos.z),
-//                                        info
-//                                );
-//                            });
-                            //System.out.println("sent colony data, color: "+color);
                         }
                     });
 
 
-
+        //10 ticks delay for adding highlights after all operations of original mod
         ServerScheduler.schedule(10, () -> {
             Network.syncColonies(player, chunks);
         });

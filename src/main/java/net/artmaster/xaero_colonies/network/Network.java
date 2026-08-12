@@ -23,7 +23,7 @@ public class Network {
 
     public static PayloadRegistrar registrar;
 
-    // Регистрация пакетов
+    // Packet registering
     @SubscribeEvent
     public static void register(RegisterPayloadHandlersEvent event) {
         registrar = event.registrar("xaero_colonies");
@@ -46,15 +46,11 @@ public class Network {
 
     }
 
-    public static void syncColonies(ServerPlayer player, Map<Long, ColonyInfo> chunks) {
 
+    //Sync info about all of colonies
+    public static void syncColonies(ServerPlayer player, Map<Long, ColonyInfo> chunks) {
         PacketDistributor.sendToPlayer(player,
                 new SyncColoniesPacket(player.serverLevel().dimension(), chunks)
         );
     }
-
-
-
-
-
 }

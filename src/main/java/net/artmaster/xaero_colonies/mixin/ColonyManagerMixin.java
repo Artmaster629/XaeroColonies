@@ -14,6 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
+
+
+//Mixin for syncing data about colony on it's deleting or creating
 @Mixin(value = ColonyManager.class, remap = false)
 public class ColonyManagerMixin {
 
@@ -24,7 +27,7 @@ public class ColonyManagerMixin {
             ),
             remap = false
     )
-    private void syncColonies(ServerLevel w, BlockPos pos, Player player, String colonyName, String pack, CallbackInfoReturnable<IColony> cir) {
+    private void createColony(ServerLevel w, BlockPos pos, Player player, String colonyName, String pack, CallbackInfoReturnable<IColony> cir) {
         if (player.level() instanceof ServerLevel level && player instanceof ServerPlayer serverPlayer) {
             ColonyTools.updateColonyCash(serverPlayer, level);
         }
@@ -37,7 +40,7 @@ public class ColonyManagerMixin {
             ),
             remap = false
     )
-    private void syncColonies(IColony iColony, boolean canDestroy, CallbackInfo ci) {
+    private void deleteColony(IColony iColony, boolean canDestroy, CallbackInfo ci) {
 
         var ownerId = iColony.getPermissions().getOwner();
         Player owner = iColony.getWorld().getPlayerByUUID(ownerId);

@@ -35,7 +35,7 @@ public class ModMain {
 
 
     public static void registerHighlighters(HighlighterRegistry registry) {
-        LOGGER.info("Registering Era x Xaero highlighter");
+        LOGGER.info("Registering XaeroColonies highlighter");
         registry.register(new ClaimsHighlighter());
     }
 

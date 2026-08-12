@@ -28,13 +28,11 @@ repositories {
         url = "https://maven.neoforged.net/releases"
     }
 
-    // CurseMaven (для модов с CurseForge, включая OpenPAC)
     maven {
         name = "CurseMaven"
         url = "https://cursemaven.com"
     }
 
-    // Sponge (на всякий случай для mixin)
     maven {
         name = "Sponge"
         url = "https://repo.spongepowered.org/maven"

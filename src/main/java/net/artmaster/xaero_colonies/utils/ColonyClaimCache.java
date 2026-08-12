@@ -11,7 +11,6 @@ import xaero.map.WorldMapSession;
 import xaero.map.region.LayeredRegionManager;
 import xaero.map.region.LeveledRegion;
 import xaero.map.region.MapRegion;
-import xaero.map.region.MapTileChunk;
 import xaero.map.world.MapDimension;
 
 import java.util.ArrayList;
@@ -24,6 +23,8 @@ import java.util.Map;
 @EventBusSubscriber
 public class ColonyClaimCache {
 
+    private static boolean disconnecting = false; //to block potencial crashes while disconnecting
+
     @SubscribeEvent
     public static void onClientDisconnect(ClientPlayerNetworkEvent.LoggingOut event) {
         disconnecting = true;
@@ -35,7 +36,7 @@ public class ColonyClaimCache {
 
     private static final Map<ResourceKey<Level>, Map<Long, ColonyInfo>> CLAIMS = new HashMap<>();
 
-    private static boolean disconnecting = false;
+
 
     public static void setClaims(ResourceKey<Level> level, Map<Long, ColonyInfo> chunks) {
         CLAIMS.put(level, chunks);
@@ -53,37 +54,17 @@ public class ColonyClaimCache {
                 return;
             }
 
-//            System.out.println(
-//                    "Region detection complete = " +
-//                            processor.getMapSaveLoad().isRegionDetectionComplete()
-//            );
+            LayeredRegionManager regions = dimension.getLayeredMapRegions();
 
+            List<LeveledRegion<?>> loadedRegions =
+                    new ArrayList<>(regions.getLoadedListUnsynced());
 
+            for (LeveledRegion<?> leveledRegion : loadedRegions) {
+                if (leveledRegion instanceof MapRegion region) {
+                    processor.getMapRegionHighlightsPreparer()
+                            .prepare(region, false);
 
-
-            for (long packed : chunks.keySet()) {
-                ChunkPos pos = new ChunkPos(packed);
-
-
-
-                LayeredRegionManager regions = dimension.getLayeredMapRegions();
-
-//                for (LeveledRegion<?> region : regions.getUnsyncedSet()) {
-//                }
-//
-//                for (LeveledRegion<?> region : regions.getLoadedListUnsynced()) {
-//                }
-
-                List<LeveledRegion<?>> loadedRegions =
-                        new ArrayList<>(regions.getLoadedListUnsynced());
-
-                for (LeveledRegion<?> leveledRegion : loadedRegions) {
-                    if (leveledRegion instanceof MapRegion region) {
-                        processor.getMapRegionHighlightsPreparer()
-                                .prepare(region, false);
-
-                        region.requestRefresh(processor, true);
-                    }
+                    region.requestRefresh(processor, true);
                 }
             }
         }

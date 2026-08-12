@@ -15,10 +15,9 @@ public class ModEvents {
 
 
     @SubscribeEvent
-    public static void onUpdateColony(EntityEvent.EnteringSection event) {
+    public static void onUpdateColony(EntityEvent.EnteringSection event) { //updating terrain white player entering chunk
         if (event.getEntity() instanceof ServerPlayer player) {
             if (player.level() instanceof ServerLevel level) {
-                System.out.println("ENTERING SECTION");
                 ColonyTools.updateColonyCash(player, level);
             }
         }
@@ -27,7 +26,7 @@ public class ModEvents {
 
 
     @SubscribeEvent
-    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) { //updating terrain on player join
 
         if (event.getEntity() instanceof ServerPlayer player) {
             if (player.level() instanceof ServerLevel level) {
